@@ -31,19 +31,28 @@ function teamSelection () {
 teamSelection()
 
 document.onkeyup = function(event) {
+    // debugger;
     
     userGuess = event.key.toUpperCase();
 
     if (userGuess.length === 1){
+
         for (let i = 0; i < selectedTeam.length; i++) {
             if (userGuess === selectedTeam[i]) {
-                underscoreArray[i] = userGuess
+                underscoreArray[i] = userGuess    
+            }        
+
+        }   
+
+        for (let i = 0; i < selectedTeam.length; i++) {
+            if (userGuess !== selectedTeam[i]) {
+                alreadyGuessed.push(userGuess).value;
+                break;
             }
-            else{
-                alreadyGuessed.push(userGuess).active;
-            }   
         }
-        guessesLeft--; 
+    
+  
+        guessesLeft--;
         console.log(underscoreArray)
     }
 
@@ -54,13 +63,16 @@ document.onkeyup = function(event) {
 
 
     var winsText = document.getElementById("winsText")
+    // var belows refers to the guessing underscores
     var guessStringText = document.getElementById("guessStringText");
     var guessesLeftText = document.getElementById("guessesLeftText");
+    var alreadyGuessedText = document.getElementById("alreadyGuessedText");
 
 
     winsText.textContent = "Wins: " + wins;
     // .join eliminates the commas when textContent displays elements in underscoreArray
     guessStringText.textContent = underscoreArray.join(" ");
     guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
+    alreadyGuessedText.textContent = "Letters Already Guessed: " + alreadyGuessed;
 
 }
