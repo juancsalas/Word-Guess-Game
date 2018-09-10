@@ -1,5 +1,7 @@
 
-var soccerTeams = ["LOS ANGELES GALAXY", "DC UNITED", "TORONTO FC", "PORTLAND THORNS", "ORLANDO CITY SC", "ATLANTA UNITED", "SEATTLE SOUNDERS", "PORTLAND TIMBERS", "SPORTING KANSAS CITY", "ORLANDO PRIDE", "SEATTLE REIGN", "UTAH ROYALS", "MANCHESTER CITY", "MANCHESTER UNITED", "LIVERPOOL", "LEICESTER CITY", "CHELSEA", "BAYERN MUNICH", "BORUSSIA DORTMUND", "FC SCHALKE", "JUVENTUS", "INTER MILAN", "AC MILAN", "NAPOLI", "AS ROMA", "BARCELONA", "REAL MADRID", "ATLETICO MADRID", "VALENCIA"];
+// var soccerTeams = ["LOS ANGELES GALAXY", "DC UNITED", "TORONTO FC", "PORTLAND THORNS", "ORLANDO CITY SC", "ATLANTA UNITED", "SEATTLE SOUNDERS", "PORTLAND TIMBERS", "SPORTING KANSAS CITY", "ORLANDO PRIDE", "SEATTLE REIGN", "UTAH ROYALS", "MANCHESTER CITY", "MANCHESTER UNITED", "LIVERPOOL", "LEICESTER CITY", "CHELSEA", "BAYERN MUNICH", "BORUSSIA DORTMUND", "FC SCHALKE", "JUVENTUS", "INTER MILAN", "AC MILAN", "NAPOLI", "AS ROMA", "BARCELONA", "REAL MADRID", "ATLETICO MADRID", "VALENCIA"];
+
+var soccerTeams = ["LOS ANGELES GALAXY"]
 
 var selectedTeam;
 var wins = 0;
@@ -39,6 +41,7 @@ function teamSelection () {
     $("#guessStringText").html(underscoreArray.join(" "));
     $("#guessesLeftText").html("Guesses Left: " + guessesLeft);
     $("#alreadyGuessedText").html("Letters Already Guessed: " + alreadyGuessed.join(" "));
+
 }
 
 // Starts the game upon user pressing a letter, displays stats, word placeholders, and runs function teamSelection and hangmanGame
@@ -117,6 +120,15 @@ function hangmanGame() {
             }
             else{
                 wins++;
+
+                // var imageTest = document.getElementById("imageTest");
+                // var src = "assets/images/"+soccerTeams+".png";
+                // src.appendChild(imageTest);
+
+                var img = document.createElement("img");
+                img.src = "assets/images/"+soccerTeams+".png";
+                var src = document.getElementById("imageTest");
+                src.appendChild(img, imageTest);
 
                 // Waits for user to press one letter after solving to reset game
                 document.onkeyup = function(event) {
