@@ -3,14 +3,18 @@ var soccerTeams = ["LOS ANGELES GALAXY", "DC UNITED", "TORONTO FC", "PORTLAND TH
 
 var selectedTeam;
 var wins = 0;
+var losses = 0;
 var guessesLeft = 15;
 var alreadyGuessed = [];
 var userGuess;
 var underscoreArray = [];
+var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 
 // This function tells the computer to choose a team from the soccerTeams array at random
 // .split function allows each letter of the soccerTeam to exist in its own array index
 function teamSelection () {
+    // debugger
     selectedTeam = soccerTeams[Math.floor(Math.random() * soccerTeams.length)].split("");
     console.log (selectedTeam)
     
@@ -25,54 +29,117 @@ function teamSelection () {
             underscoreArray[i] = "\xa0"
         }
     }
-    console.log(underscoreArray)
+    console.log(underscoreArray);
+    
+    // Displays initial game stats
+    $("#instructions").html("");
+    $("#winsText").html("Wins: " + wins);
+    $("#lossesText").html("Losses: " + losses);
+    // var belows refers to the guessing underscores
+    $("#guessStringText").html(underscoreArray.join(" "));
+    $("#guessesLeftText").html("Guesses Left: " + guessesLeft);
+    $("#alreadyGuessedText").html("Letters Already Guessed: " + alreadyGuessed.join(" "));
 }
 
-teamSelection()
-
+// Starts the game upon user pressing a letter, displays stats, word placeholders, and runs function teamSelection and hangmanGame
 document.onkeyup = function(event) {
-    // debugger;
-    
     userGuess = event.key.toUpperCase();
 
-    if (userGuess.length === 1){
+    // Limits user to start game only when a letter is pressed and not any other key. useful to prevent command/control + r from triggering guesses
+    if (alphabet.includes(userGuess) && userGuess.length === 1){
+        teamSelection()
+        hangmanGame()
 
-        for (let i = 0; i < selectedTeam.length; i++) {
-            if (userGuess === selectedTeam[i]) {
-                underscoreArray[i] = userGuess    
-            }        
 
-        }   
+    }
+}
 
-        for (let i = 0; i < selectedTeam.length; i++) {
-            if (userGuess !== selectedTeam[i]) {
-                alreadyGuessed.push(userGuess).value;
-                break;
+
+function hangmanGame() {
+
+    // userGuess starts storing the letter guessed by user for the hangmanGame
+    document.onkeyup = function(event) {
+      userGuess = event.key.toUpperCase();
+
+      // debugger <---- to debug game
+        
+        // Limits user to start game only when a letter is pressed and not any other key. useful to prevent command/control + r from triggering guesses
+        if (alphabet.includes(userGuess) && userGuess.length === 1){
+            
+            // Loop checks if letter chosen by user (userGuess) matches by checking each element in array selectedTeams
+            for (let i = 0; i < selectedTeam.length; i++) {
+
+                // If userGuess matches an element in selectedTeam array, if statement will push that letter to the it's corresponding position in underscoreArray
+                if (userGuess === selectedTeam[i]) {
+                    underscoreArray[i] = userGuess
+                }        
             }
-        }
-    
-  
-        guessesLeft--;
-        console.log(underscoreArray)
-    }
+            
+            // Checks if userGuess letter is in either statement
+            //Purpose of this if statement is to prevent repeated or correct letter from being pushed into alreadyGuessed array and to reduce guessesLeft by one per letter
+            if (alreadyGuessed.includes(userGuess) || underscoreArray.includes(userGuess)) {
+                // Left blank since nothing is suppose to happen if this statement is true
+            }
+            else {
+                // Checks if userGuess is in selected Team array
+                if (selectedTeam.includes(userGuess)) {
+                    // Left blank since nothing is suppose to happen if this statement is true
+                }
+
+                // If letter chosen is a wrong letter then it gets pushed to alreadyGuessed and guessedLeft is reduced by 1
+                else {
+                    alreadyGuessed.push(userGuess);
+                    guessesLeft--;
+                }
+            }
+        }    
+            // Statement restarts game and resets game stats when players runs out of guesses
+            if (guessesLeft === 0) {
+                losses++;
+
+                // Waits for user to press one letter after running out of tries to reset game
+                document.onkeyup = function(event) {
+                    userGuess = event.key.toUpperCase();
+
+                    if (alphabet.includes(userGuess) && userGuess.length === 1){
+                        guessesLeft = 15;
+                        alreadyGuessed = [];
+                        underscoreArray = [];
+                        teamSelection();
+                        hangmanGame();
+                    }
+                }
+            }
+
+            // Statement restarts game and resets stats when player wins by checking that there are no more underscores left in the underscoreArray
+            if (underscoreArray.includes("_")) {
+                // Left blank since nothing is suppose to happen if this statement is true
+            }
+            else{
+                wins++;
+
+                // Waits for user to press one letter after solving to reset game
+                document.onkeyup = function(event) {
+                userGuess = event.key.toUpperCase();
+                
+                    if (alphabet.includes(userGuess) && userGuess.length === 1){
+                        guessesLeft = 15;
+                        alreadyGuessed = [];
+                        underscoreArray = [];
+                        teamSelection();
+                        hangmanGame();
+                    }
+                }
+            }
+        
 
 
-    if (underscoreArray === selectedTeam) {
-        wins++;
-    }
-
-
-    var winsText = document.getElementById("winsText")
-    // var belows refers to the guessing underscores
-    var guessStringText = document.getElementById("guessStringText");
-    var guessesLeftText = document.getElementById("guessesLeftText");
-    var alreadyGuessedText = document.getElementById("alreadyGuessedText");
-
-
-    winsText.textContent = "Wins: " + wins;
-    // .join eliminates the commas when textContent displays elements in underscoreArray
-    guessStringText.textContent = underscoreArray.join(" ");
-    guessesLeftText.textContent = "Guesses Left: " + guessesLeft;
-    alreadyGuessedText.textContent = "Letters Already Guessed: " + alreadyGuessed;
-
+        // Updates the game stat text during gameplay
+        $("#winsText").html("Wins: " + wins);
+        $("#lossesText").html("Losses: " + losses);
+         // var belows refers to the guessing underscores
+        $("#guessStringText").html(underscoreArray.join(" "));
+        $("#guessesLeftText").html("Guesses Left: " + guessesLeft);
+        $("#alreadyGuessedText").html("Letters Already Guessed: " + alreadyGuessed.join(" "));
+    }   
 }
