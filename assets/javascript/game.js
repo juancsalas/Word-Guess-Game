@@ -1,7 +1,7 @@
 
-// var soccerTeams = ["LOS ANGELES GALAXY", "DC UNITED", "TORONTO FC", "PORTLAND THORNS", "ORLANDO CITY SC", "ATLANTA UNITED", "SEATTLE SOUNDERS", "PORTLAND TIMBERS", "SPORTING KANSAS CITY", "ORLANDO PRIDE", "SEATTLE REIGN", "UTAH ROYALS", "MANCHESTER CITY", "MANCHESTER UNITED", "LIVERPOOL", "LEICESTER CITY", "CHELSEA", "BAYERN MUNICH", "BORUSSIA DORTMUND", "FC SCHALKE", "JUVENTUS", "INTER MILAN", "AC MILAN", "NAPOLI", "AS ROMA", "BARCELONA", "REAL MADRID", "ATLETICO MADRID", "VALENCIA"];
+var soccerTeams = ["LOS ANGELES GALAXY", "DC UNITED", "TORONTO FC", "PORTLAND THORNS", "ORLANDO CITY SC", "ATLANTA UNITED", "SEATTLE SOUNDERS", "PORTLAND TIMBERS", "SPORTING KANSAS CITY", "ORLANDO PRIDE", "SEATTLE REIGN", "UTAH ROYALS", "MANCHESTER CITY", "MANCHESTER UNITED", "LIVERPOOL", "LEICESTER CITY", "CHELSEA", "BAYERN MUNICH", "BORUSSIA DORTMUND", "FC SCHALKE", "JUVENTUS", "INTER MILAN", "AC MILAN", "NAPOLI", "AS ROMA", "BARCELONA", "REAL MADRID", "ATLETICO MADRID", "VALENCIA"];
 
-var soccerTeams = ["LOS ANGELES GALAXY"]
+// var soccerTeams = ["LOS ANGELES GALAXY"]
 
 var selectedTeam;
 var wins = 0;
@@ -35,8 +35,7 @@ function teamSelection () {
     
     // Displays initial game stats
     $("#instructions").html("");
-    $("#winsText").html("Wins: " + wins);
-    $("#lossesText").html("Losses: " + losses);
+    $("#scoreText").html("Wins: " + wins + "\xa0\xa0" + "--" +"\xa0\xa0" + "Losses: " + losses);
     // var belows refers to the guessing underscores
     $("#guessStringText").html(underscoreArray.join(" "));
     $("#guessesLeftText").html("Guesses Left: " + guessesLeft);
@@ -120,15 +119,15 @@ function hangmanGame() {
             }
             else{
                 wins++;
-
-                // var imageTest = document.getElementById("imageTest");
-                // var src = "assets/images/"+soccerTeams+".png";
-                // src.appendChild(imageTest);
-
+            
                 var img = document.createElement("img");
                 img.src = "assets/images/"+soccerTeams+".png";
-                var src = document.getElementById("imageTest");
-                src.appendChild(img, imageTest);
+                var src = document.getElementById("winImage");
+                img.setAttribute("width", "200");
+                src.appendChild(img, winImage);
+
+                
+
 
                 // Waits for user to press one letter after solving to reset game
                 document.onkeyup = function(event) {
@@ -140,18 +139,17 @@ function hangmanGame() {
                         underscoreArray = [];
                         teamSelection();
                         hangmanGame();
-                    }
+                        src.removeChild(img, winImage);                    }
                 }
             }
         
 
 
         // Updates the game stat text during gameplay
-        $("#winsText").html("Wins: " + wins);
-        $("#lossesText").html("Losses: " + losses);
+        $("#scoreText").html("Wins: " + wins + "\xa0\xa0" + "--" +"\xa0\xa0" + "Losses: " + losses);
          // var belows refers to the guessing underscores
         $("#guessStringText").html(underscoreArray.join(" "));
         $("#guessesLeftText").html("Guesses Left: " + guessesLeft);
-        $("#alreadyGuessedText").html("Letters Already Guessed: " + alreadyGuessed.join(" "));
+        $("#alreadyGuessedText").html("Letters Already Guessed: <br/>" + alreadyGuessed.join(" "));
     }   
 }

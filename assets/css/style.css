@@ -1,3 +1,85 @@
-img {
-    height: 100px;
+html, body {
+    height: 90%;
 }
+
+header {
+    height: 140px;
+    background-color: lightcyan;
+    padding-top: 20px;
+}
+
+.mainHeader {
+    width: 960px;
+    margin: auto;
+    text-align: center;
+    font-size: 50px;
+    font-family: 'Monoton', cursive;
+    word-spacing: 25px;
+    color: goldenrod;
+}
+
+.subHeader {
+    width: 960px;
+    margin: auto;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 50px;
+    font-family: fantasy;
+    color: darkblue;
+
+}
+
+.soccerBall {
+    width: 25px;
+    top: 5px;
+    
+}
+
+/* CSS for Main Content */
+.backgroundImage {
+    background-image: url("../images/pitch.png");
+    background-size: cover;
+    height: 100%;
+}
+    
+.mainGame{
+    width: 960px;
+    margin: auto;
+    padding-top: 6%;
+    display: flex;
+    height: 375px;
+}
+
+.gameEffects {
+    flex: 0 0 55%;
+    background-color: lightcyan;
+    opacity: .9;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+#winImage {
+    padding-left: 20%;
+    padding-top: 5%;
+}
+
+.gameText {
+    flex: 1;
+    padding-top: 5%;
+    background-color: lightcyan;
+    opacity: .9;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    line-height: 3;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 22px;
+    text-align: center;
+}
+
+
+#alreadyGuessedText {
+    line-height: 1.5;
+}
+                    
+
+
