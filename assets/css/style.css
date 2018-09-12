@@ -41,6 +41,10 @@ header {
     background-size: cover;
     height: 100%;
 }
+
+#gamePlay {
+    height: 300px;
+}
     
 .mainGame{
     width: 960px;
@@ -58,7 +62,7 @@ header {
     border-bottom-left-radius: 10px;
 }
 
-#winImage {
+#resultImage {
     padding-left: 20%;
     padding-top: 5%;
 }

@@ -6,7 +6,7 @@ var soccerTeams = ["LOS ANGELES GALAXY", "DC UNITED", "TORONTO FC", "PORTLAND TH
 var selectedTeam;
 var wins = 0;
 var losses = 0;
-var guessesLeft = 15;
+var guessesLeft = 5;
 var alreadyGuessed = [];
 var userGuess;
 var underscoreArray = [];
@@ -16,8 +16,9 @@ var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 // This function tells the computer to choose a team from the soccerTeams array at random
 // .split function allows each letter of the soccerTeam to exist in its own array index
 function teamSelection () {
-    // debugger
-    selectedTeam = soccerTeams[Math.floor(Math.random() * soccerTeams.length)].split("");
+
+    teamString = soccerTeams[Math.floor(Math.random() * soccerTeams.length)]
+    selectedTeam = teamString.split("");
     console.log (selectedTeam)
     
     // For loop to create separate array that has underscores for every element (letter) in SelectedTeam
@@ -40,6 +41,12 @@ function teamSelection () {
     $("#guessStringText").html(underscoreArray.join(" "));
     $("#guessesLeftText").html("Guesses Left: " + guessesLeft);
     $("#alreadyGuessedText").html("Letters Already Guessed: " + alreadyGuessed.join(" "));
+    
+    // var img = document.createElement("img");
+    // img.src = "assets/images/gamePlay.jpeg";
+    // var src = document.getElementById("resultImage");
+    // img.setAttribute("width", "300");
+    // src.appendChild(img, resultImage);
 
 }
 
@@ -51,8 +58,6 @@ document.onkeyup = function(event) {
     if (alphabet.includes(userGuess) && userGuess.length === 1){
         teamSelection()
         hangmanGame()
-
-
     }
 }
 
@@ -62,8 +67,6 @@ function hangmanGame() {
     // userGuess starts storing the letter guessed by user for the hangmanGame
     document.onkeyup = function(event) {
       userGuess = event.key.toUpperCase();
-
-      // debugger <---- to debug game
         
         // Limits user to start game only when a letter is pressed and not any other key. useful to prevent command/control + r from triggering guesses
         if (alphabet.includes(userGuess) && userGuess.length === 1){
@@ -99,6 +102,14 @@ function hangmanGame() {
             if (guessesLeft === 0) {
                 losses++;
 
+                document.getElementById("gamePlay").src="";
+                var img = document.createElement("img");
+                img.src = "assets/images/redCard.jpg";
+                var src = document.getElementById("resultImage");
+                img.setAttribute("width", "375");
+                src.appendChild(img, resultImage);
+
+
                 // Waits for user to press one letter after running out of tries to reset game
                 document.onkeyup = function(event) {
                     userGuess = event.key.toUpperCase();
@@ -109,6 +120,7 @@ function hangmanGame() {
                         underscoreArray = [];
                         teamSelection();
                         hangmanGame();
+                        src.removeChild(img, resultImage);  
                     }
                 }
             }
@@ -119,12 +131,13 @@ function hangmanGame() {
             }
             else{
                 wins++;
-            
+                
+                document.getElementById("gamePlay").src="";
                 var img = document.createElement("img");
-                img.src = "assets/images/"+soccerTeams+".png";
-                var src = document.getElementById("winImage");
+                img.src = "assets/images/"+teamString+".png";
+                var src = document.getElementById("resultImage");
                 img.setAttribute("width", "200");
-                src.appendChild(img, winImage);
+                src.appendChild(img, resultImage);
 
                 
 
@@ -139,7 +152,7 @@ function hangmanGame() {
                         underscoreArray = [];
                         teamSelection();
                         hangmanGame();
-                        src.removeChild(img, winImage);                    }
+                        src.removeChild(img, resultImage);                    }
                 }
             }
         
