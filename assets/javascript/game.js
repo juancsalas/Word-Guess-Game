@@ -55,6 +55,8 @@ $(document).ready(function () {
         if (alphabet.includes(userGuess) && userGuess.length === 1){
             teamSelection()
             hangmanGame()
+
+            // Plays a whistle and crowd sound when game starts
             whistleAudio = document.createElement("audio");
             whistleAudio.setAttribute("src","assets/audio/whistle.mp3");
             whistleAudio.play();
@@ -113,6 +115,8 @@ $(document).ready(function () {
                     var src = document.getElementById("resultImage");
                     img.setAttribute("width", "375");
                     src.appendChild(img, resultImage);
+
+                    // Stops crowd noice and plays whistle and booing when player loses
                     cheerAudio.pause();
                     var endAudio = document.createElement("audio");
                     endAudio.setAttribute("src","assets/audio/lose.mp3");
@@ -153,6 +157,8 @@ $(document).ready(function () {
                     var src = document.getElementById("resultImage");
                     img.setAttribute("width", "200");
                     src.appendChild(img, resultImage);
+
+                    // Stops crowd noise and plays louder cheers and song when player wins
                     cheerAudio.pause();
                     var endAudio = document.createElement("audio");
                     endAudio.setAttribute("src","assets/audio/win.mp3");
